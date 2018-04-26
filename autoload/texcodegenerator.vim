@@ -19,7 +19,7 @@ function! s:get_visual_selection()
     return join(lines, "\n")
 endfunction
 
-function! s:helloworld()
+function! texcodegenerator#helloworld()
     echo s:get_visual_selection()
 endfunction
 
