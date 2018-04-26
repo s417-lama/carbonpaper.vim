@@ -1,0 +1,1 @@
+# tex-code-generator.vim
