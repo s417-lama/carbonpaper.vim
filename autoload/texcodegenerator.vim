@@ -1,13 +1,13 @@
 scriptencoding utf-8
 
-if !exists("g:loaded_tex_code_generator")
+if !exists("g:loaded_texcodegenerator")
     finish
 end
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! tex-code-generator#helloworld()
+function! texcodegenerator#helloworld()
     echo "Hello world!"
 endfunction
 
