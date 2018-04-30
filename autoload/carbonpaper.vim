@@ -96,10 +96,9 @@ function! s:escape_text(text)
 endfunction
 
 function! s:gen_colored_text(text, color_name)
-    call map(a:text, {_, c -> s:escape_char(c)})
     let body = join(a:text, "")
     return join([g:carbonpaper#tex_escape_begin,
-                \"*", a:color_name, "*", body,
+                \a:color_name, "*", body,
                 \g:carbonpaper#tex_escape_end], "")
 endfunction
 
@@ -131,7 +130,7 @@ endfunction
 function! s:gen_moredelim(color_name)
     let begin = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end   = s:escape_text(g:carbonpaper#tex_escape_end)
-    return join(["moredelim=[is][\\color{", a:color_name, "}]{", begin, "*", a:color_name, "*}{", end, "}"], "")
+    return join(["moredelim=[is][\\color{", a:color_name, "}]{", begin, a:color_name, "*}{", end, "}"], "")
 endfunction
 
 function! s:gen_moredelims(color_map)
@@ -146,24 +145,22 @@ function! s:gen_lstset(color_map)
     let begin     = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end       = s:escape_text(g:carbonpaper#tex_escape_end)
     let moredelim = s:gen_moredelims(a:color_map)
-    let options   = g:carbonpaper#tex_listing_options
-    if g:carbonpaper#set_foreground_color
-        let basic_option = 'basicstyle=\\color{Normal}'
-        let options      = substitute(g:carbonpaper#tex_listing_options, "basicstyle=", basic_option, "g")
-        if match(options, "basicstyle=") == -1
-            let options = join([options, basic_option], ",")
-        endif
-    endif
+    let options   = "language="
     if g:carbonpaper#set_background_color
         let options = join(["backgroundcolor=\\color{NonText}", options], ",")
     endif
-    return join(["\\lstset{language=,",
-                \options, ",",
-                \moredelim, "}"], "")
+    return join(["\\lstset{", options, ",", moredelim, "}"], "")
 endfunction
 
 function! s:gen_begin_listing()
-    return "\\begin{lstlisting}"
+    let options = g:carbonpaper#tex_listing_options
+    if g:carbonpaper#set_foreground_color
+        let options      = substitute(g:carbonpaper#tex_listing_options, "basicstyle=", 'basicstyle=\\color{Normal}', "g")
+        if match(options, "basicstyle=") == -1
+            let options = join([options, 'basicstyle=\color{Normal}'], ",")
+        endif
+    endif
+    return join(["\\begin{lstlisting}[", options, "]"], "")
 endfunction
 
 function! s:gen_end_listing()
