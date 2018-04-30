@@ -7,13 +7,16 @@ end
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:carbonpaper#tex_escape_start = get(g:, "carbonpaper#tex_escape_start", "(<carbonpaper.vim--start>*#")
-let g:carbonpaper#tex_escape_end   = get(g:, "carbonpaper#tex_escape_end"  , "#*<carbonpaper.vim--end>)")
-let g:carbonpaper#save_as          = get(g:, "carbonpaper#save_as"         , "<filename>.tex")
-let g:carbonpaper#filename_token   = get(g:, "carbonpaper#filename_token"  , "<filename>")
-let g:carbonpaper#overwrite        = get(g:, "carbonpaper#overwrite"       , 0)
-let g:carbonpaper#background       = get(g:, "carbonpaper#background"      , &background)
-let g:carbonpaper#colorscheme      = get(g:, "carbonpaper#colorscheme"     , g:colors_name)
+let g:carbonpaper#tex_escape_begin     = get(g:, "carbonpaper#tex_escape_begin"    , "(<carbonpaper.vim--begin>*#")
+let g:carbonpaper#tex_escape_end       = get(g:, "carbonpaper#tex_escape_end"      , "#*<carbonpaper.vim--end>)")
+let g:carbonpaper#save_as              = get(g:, "carbonpaper#save_as"             , "<filename>.tex")
+let g:carbonpaper#filename_token       = get(g:, "carbonpaper#filename_token"      , "<filename>")
+let g:carbonpaper#overwrite            = get(g:, "carbonpaper#overwrite"           , 0)
+let g:carbonpaper#background           = get(g:, "carbonpaper#background"          , &background)
+let g:carbonpaper#colorscheme          = get(g:, "carbonpaper#colorscheme"         , g:colors_name)
+let g:carbonpaper#tex_listing_options  = get(g:, "carbonpaper#tex_listing_options" , 'basicstyle=\ttfamily')
+let g:carbonpaper#set_background_color = get(g:, "carbonpaper#set_background_color", 1)
+let g:carbonpaper#set_foreground_color = get(g:, "carbonpaper#set_foreground_color", 1)
 
 function! s:parse_selected()
     let color_map                  = {}
@@ -32,6 +35,9 @@ function! s:parse_selected()
     let save_background  = &background
     call execute(join(["colorscheme ", g:carbonpaper#colorscheme], ""))
     call execute(join(["set background=", g:carbonpaper#background], ""))
+
+    let color_map["NonText"] = synIDattr(hlID("NonText"), "bg#")
+    let color_map["Normal"]  = synIDattr(hlID("Normal"),  "fg#")
 
     for line in lines
         while col <= strlen(line)
@@ -53,7 +59,9 @@ function! s:parse_selected()
             let tmp_name = name
         endwhile
         call add(text_list, [tmp_name, tmp_text])
-        call add(text_list, ["", ["\n"]])
+        if row < line_end
+            call add(text_list, ["", ["\n"]])
+        endif
         let tmp_text = []
         let col = 1
         let row += 1
@@ -90,7 +98,7 @@ endfunction
 function! s:gen_colored_text(text, color_name)
     call map(a:text, {_, c -> s:escape_char(c)})
     let body = join(a:text, "")
-    return join([g:carbonpaper#tex_escape_start,
+    return join([g:carbonpaper#tex_escape_begin,
                 \"\\textcolor{", a:color_name, "}{", body, "}",
                 \g:carbonpaper#tex_escape_end], "")
 endfunction
@@ -121,10 +129,22 @@ function! s:gen_color_definitions(color_map)
 endfunction
 
 function! s:gen_begin_listing()
-    let start = s:escape_text(g:carbonpaper#tex_escape_start)
-    let end   = s:escape_text(g:carbonpaper#tex_escape_end)
-    return join(["\\begin{lstlisting}[basicstyle=\\ttfamily,escapeinside={",
-                \start, "}{", end, "}]"], "")
+    let begin   = s:escape_text(g:carbonpaper#tex_escape_begin)
+    let end     = s:escape_text(g:carbonpaper#tex_escape_end)
+    let options = g:carbonpaper#tex_listing_options
+    if g:carbonpaper#set_foreground_color
+        let basic_option = 'basicstyle=\\color{Normal}'
+        let options      = substitute(g:carbonpaper#tex_listing_options, "basicstyle=", basic_option, "g")
+        if match(options, "basicstyle=") == -1
+            let options = join([options, basic_option], ",")
+        endif
+    endif
+    if g:carbonpaper#set_background_color
+        let options = join(["backgroundcolor=\\color{NonText}", options], ",")
+    endif
+    return join(["\\begin{lstlisting}[language=,",
+                \options,
+                \",escapeinside={", begin, "}{", end, "}]"], "")
 endfunction
 
 function! s:gen_end_listing()
