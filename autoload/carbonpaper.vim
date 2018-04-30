@@ -99,7 +99,7 @@ function! s:gen_colored_text(text, color_name)
     call map(a:text, {_, c -> s:escape_char(c)})
     let body = join(a:text, "")
     return join([g:carbonpaper#tex_escape_begin,
-                \"\\textcolor{", a:color_name, "}{", body, "}",
+                \"*", a:color_name, "*", body,
                 \g:carbonpaper#tex_escape_end], "")
 endfunction
 
@@ -128,10 +128,25 @@ function! s:gen_color_definitions(color_map)
     return join(def_list, "\n")
 endfunction
 
-function! s:gen_begin_listing()
-    let begin   = s:escape_text(g:carbonpaper#tex_escape_begin)
-    let end     = s:escape_text(g:carbonpaper#tex_escape_end)
-    let options = g:carbonpaper#tex_listing_options
+function! s:gen_moredelim(color_name)
+    let begin = s:escape_text(g:carbonpaper#tex_escape_begin)
+    let end   = s:escape_text(g:carbonpaper#tex_escape_end)
+    return join(["moredelim=[is][\\color{", a:color_name, "}]{", begin, "*", a:color_name, "*}{", end, "}"], "")
+endfunction
+
+function! s:gen_moredelims(color_map)
+    let delim_list = []
+    for name in keys(a:color_map)
+        call add(delim_list, s:gen_moredelim(name))
+    endfor
+    return join(delim_list, ",")
+endfunction
+
+function! s:gen_lstset(color_map)
+    let begin     = s:escape_text(g:carbonpaper#tex_escape_begin)
+    let end       = s:escape_text(g:carbonpaper#tex_escape_end)
+    let moredelim = s:gen_moredelims(a:color_map)
+    let options   = g:carbonpaper#tex_listing_options
     if g:carbonpaper#set_foreground_color
         let basic_option = 'basicstyle=\\color{Normal}'
         let options      = substitute(g:carbonpaper#tex_listing_options, "basicstyle=", basic_option, "g")
@@ -142,9 +157,13 @@ function! s:gen_begin_listing()
     if g:carbonpaper#set_background_color
         let options = join(["backgroundcolor=\\color{NonText}", options], ",")
     endif
-    return join(["\\begin{lstlisting}[language=,",
-                \options,
-                \",escapeinside={", begin, "}{", end, "}]"], "")
+    return join(["\\lstset{language=,",
+                \options, ",",
+                \moredelim, "}"], "")
+endfunction
+
+function! s:gen_begin_listing()
+    return "\\begin{lstlisting}"
 endfunction
 
 function! s:gen_end_listing()
@@ -171,7 +190,8 @@ function! carbonpaper#main(...) range
     let [text_list, color_map] = s:parse_selected()
     let code_body = s:gen_tex_code(text_list, color_map)
     let color_def = s:gen_color_definitions(color_map)
-    let result = join([color_def, s:gen_begin_listing(), code_body, s:gen_end_listing()], "\n")
+    let lstset    = s:gen_lstset(color_map)
+    let result = join([color_def, lstset, s:gen_begin_listing(), code_body, s:gen_end_listing()], "\n")
     if a:0 == 0
         call s:save(result, g:carbonpaper#save_as)
     else
