@@ -1,14 +1,14 @@
 scriptencoding utf-8
 
-if !exists("g:loaded_texcodegenerator")
+if !exists("g:loaded_carbonpaper")
     finish
 end
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:texcodegenerator#tex_escape_start = "(<tcg.vim__start>*-"
-let g:texcodegenerator#tex_escape_end   = "-*<tcg.vim__end>)"
+let g:carbonpaper#tex_escape_start = "(<carbonpaper.vim__start>*-"
+let g:carbonpaper#tex_escape_end   = "-*<carbonpaper.vim__end>)"
 
 function! s:parse_selected()
     let color_map                  = {}
@@ -71,9 +71,9 @@ endfunction
 function! s:gen_colored_text(text, color_name)
     call map(a:text, {_, x -> s:escape_text(x)})
     let body = join(a:text, "")
-    return join([g:texcodegenerator#tex_escape_start,
+    return join([g:carbonpaper#tex_escape_start,
                 \"\\textcolor{", a:color_name, "}{", body, "}",
-                \g:texcodegenerator#tex_escape_end], "")
+                \g:carbonpaper#tex_escape_end], "")
 endfunction
 
 function! s:gen_tex_code(text_list, color_map)
@@ -103,14 +103,14 @@ endfunction
 
 function! s:gen_begin_listing()
     return join(["\\begin{lstlisting}[basicstyle=\\ttfamily,escapeinside={",
-                \g:texcodegenerator#tex_escape_start, "}{", g:texcodegenerator#tex_escape_end, "}]"], "")
+                \g:carbonpaper#tex_escape_start, "}{", g:carbonpaper#tex_escape_end, "}]"], "")
 endfunction
 
 function! s:gen_end_listing()
     return "\\end{lstlisting}"
 endfunction
 
-function! texcodegenerator#helloworld() range
+function! carbonpaper#helloworld() range
     let [text_list, color_map] = s:parse_selected()
     let code_body = s:gen_tex_code(text_list, color_map)
     let color_def = s:gen_color_definitions(color_map)

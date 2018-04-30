@@ -1,1 +1,1 @@
-# tex-code-generator.vim
+# carbonpaper.vim
