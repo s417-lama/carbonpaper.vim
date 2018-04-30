@@ -7,8 +7,8 @@ end
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:carbonpaper#tex_escape_start = get(g:, "carbonpaper#tex_escape_start", "(<carbonpaper.vim__start>*\\#")
-let g:carbonpaper#tex_escape_end   = get(g:, "carbonpaper#tex_escape_end"  , "\\#*<carbonpaper.vim__end>)")
+let g:carbonpaper#tex_escape_start = get(g:, "carbonpaper#tex_escape_start", "(<carbonpaper.vim--start>*#")
+let g:carbonpaper#tex_escape_end   = get(g:, "carbonpaper#tex_escape_end"  , "#*<carbonpaper.vim--end>)")
 let g:carbonpaper#save_as          = get(g:, "carbonpaper#save_as"         , "<filename>.tex")
 let g:carbonpaper#filename_token   = get(g:, "carbonpaper#filename_token"  , "<filename>")
 let g:carbonpaper#overwrite        = get(g:, "carbonpaper#overwrite"       , 0)
@@ -66,23 +66,29 @@ function! s:parse_selected()
     return [text_list, color_map]
 endfunction
 
-function! s:escape_text(text)
+function! s:escape_char(char)
     let default_escapes = ["{", "}", "$", "#", "_", "&", "%"]
-    if index(default_escapes, a:text) >= 0
-        return join(["\\", a:text], "")
+    if index(default_escapes, a:char) >= 0
+        return join(["\\", a:char], "")
     end
-    if a:text == "\\"
+    if a:char == "\\"
         return "\\textbackslash{}"
-    elseif a:text == "^"
+    elseif a:char == "^"
         return "\\textasciicircum{}"
-    elseif a:text == "~"
+    elseif a:char == "~"
         return "\\textasciitilde{}"
     endif
-    return a:text
+    return a:char
+endfunction
+
+function! s:escape_text(text)
+    let charlist = split(a:text, '\zs')
+    call map(charlist, {_, c -> s:escape_char(c)})
+    return join(charlist, "")
 endfunction
 
 function! s:gen_colored_text(text, color_name)
-    call map(a:text, {_, x -> s:escape_text(x)})
+    call map(a:text, {_, c -> s:escape_char(c)})
     let body = join(a:text, "")
     return join([g:carbonpaper#tex_escape_start,
                 \"\\textcolor{", a:color_name, "}{", body, "}",
@@ -115,8 +121,10 @@ function! s:gen_color_definitions(color_map)
 endfunction
 
 function! s:gen_begin_listing()
+    let start = s:escape_text(g:carbonpaper#tex_escape_start)
+    let end   = s:escape_text(g:carbonpaper#tex_escape_end)
     return join(["\\begin{lstlisting}[basicstyle=\\ttfamily,escapeinside={",
-                \g:carbonpaper#tex_escape_start, "}{", g:carbonpaper#tex_escape_end, "}]"], "")
+                \start, "}{", end, "}]"], "")
 endfunction
 
 function! s:gen_end_listing()
