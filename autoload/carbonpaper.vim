@@ -7,8 +7,8 @@ end
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:carbonpaper#tex_escape_start = get(g:, "carbonpaper#tex_escape_start", "(<carbonpaper.vim__start>*-")
-let g:carbonpaper#tex_escape_end   = get(g:, "carbonpaper#tex_escape_end"  , "-*<carbonpaper.vim__end>)")
+let g:carbonpaper#tex_escape_start = get(g:, "carbonpaper#tex_escape_start", "(<carbonpaper.vim__start>*\\#")
+let g:carbonpaper#tex_escape_end   = get(g:, "carbonpaper#tex_escape_end"  , "\\#*<carbonpaper.vim__end>)")
 let g:carbonpaper#save_as          = get(g:, "carbonpaper#save_as"         , "<filename>.tex")
 let g:carbonpaper#filename_token   = get(g:, "carbonpaper#filename_token"  , "<filename>")
 let g:carbonpaper#overwrite        = get(g:, "carbonpaper#overwrite"       , 0)
