@@ -7,8 +7,13 @@ end
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:carbonpaper#tex_escape_start = "(<carbonpaper.vim__start>*-"
-let g:carbonpaper#tex_escape_end   = "-*<carbonpaper.vim__end>)"
+let g:carbonpaper#tex_escape_start = get(g:, "carbonpaper#tex_escape_start", "(<carbonpaper.vim__start>*-")
+let g:carbonpaper#tex_escape_end   = get(g:, "carbonpaper#tex_escape_end"  , "-*<carbonpaper.vim__end>)")
+let g:carbonpaper#save_as          = get(g:, "carbonpaper#save_as"         , "<filename>.tex")
+let g:carbonpaper#filename_token   = get(g:, "carbonpaper#filename_token"  , "<filename>")
+let g:carbonpaper#overwrite        = get(g:, "carbonpaper#overwrite"       , 0)
+let g:carbonpaper#background       = get(g:, "carbonpaper#background"      , &background)
+let g:carbonpaper#colorscheme      = get(g:, "carbonpaper#colorscheme"     , g:colors_name)
 
 function! s:parse_selected()
     let color_map                  = {}
@@ -23,11 +28,16 @@ function! s:parse_selected()
     let tmp_text                   = []
     let tmp_name                   = ""
 
+    let save_colorscheme = g:colors_name
+    let save_background  = &background
+    call execute(join(["colorscheme ", g:carbonpaper#colorscheme], ""))
+    call execute(join(["set background=", g:carbonpaper#background], ""))
+
     for line in lines
         while col <= strlen(line)
             let char  = line[col - 1]
             let id    = synIDtrans(synID(row, col, 1))
-            let color = synIDattr(id, "fg")
+            let color = synIDattr(id, "fg#")
             let name  = synIDattr(id, "name")
             if id == last_id || tmp_text == []
                 call add(tmp_text, char)
@@ -49,6 +59,9 @@ function! s:parse_selected()
         let row += 1
     endfor
     call add(text_list, [tmp_name, tmp_text])
+
+    call execute(join(["colorscheme ", save_colorscheme], ""))
+    call execute(join(["set background=", save_background], ""))
 
     return [text_list, color_map]
 endfunction
@@ -110,12 +123,32 @@ function! s:gen_end_listing()
     return "\\end{lstlisting}"
 endfunction
 
-function! carbonpaper#helloworld() range
+function! s:save(text, filename)
+    let filename = substitute(a:filename, g:carbonpaper#filename_token, expand('%:t'), "g")
+    if !g:carbonpaper#overwrite
+        while filereadable(filename)
+            let num = str2nr(split(filename, '\.')[-1])
+            if num == 0
+                let filename = join([filename, 1], ".")
+            else
+                let filename = join(split(filename, '\.')[:-2] + [num + 1], ".")
+            endif
+        endwhile
+    endif
+    call writefile(split(a:text, "\n"), filename)
+    echo join(["Saved as '", filename, "'"], "")
+endfunction
+
+function! carbonpaper#main(...) range
     let [text_list, color_map] = s:parse_selected()
     let code_body = s:gen_tex_code(text_list, color_map)
     let color_def = s:gen_color_definitions(color_map)
     let result = join([color_def, s:gen_begin_listing(), code_body, s:gen_end_listing()], "\n")
-    call writefile(split(result, "\n"), "log")
+    if a:0 == 0
+        call s:save(result, g:carbonpaper#save_as)
+    else
+        call s:save(result, a:1)
+    endif
 endfunction
 
 let &cpo = s:save_cpo
