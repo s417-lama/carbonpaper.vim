@@ -7,16 +7,17 @@ end
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:carbonpaper#tex_escape_begin     = get(g:, "carbonpaper#tex_escape_begin"    , "(<carbonpaper.vim--begin>*#")
-let g:carbonpaper#tex_escape_end       = get(g:, "carbonpaper#tex_escape_end"      , "#*<carbonpaper.vim--end>)")
-let g:carbonpaper#save_as              = get(g:, "carbonpaper#save_as"             , "<filename>.tex")
-let g:carbonpaper#filename_token       = get(g:, "carbonpaper#filename_token"      , "<filename>")
-let g:carbonpaper#overwrite            = get(g:, "carbonpaper#overwrite"           , 0)
-let g:carbonpaper#background           = get(g:, "carbonpaper#background"          , &background)
-let g:carbonpaper#colorscheme          = get(g:, "carbonpaper#colorscheme"         , g:colors_name)
-let g:carbonpaper#tex_listing_options  = get(g:, "carbonpaper#tex_listing_options" , 'basicstyle=\ttfamily')
-let g:carbonpaper#set_background_color = get(g:, "carbonpaper#set_background_color", 1)
-let g:carbonpaper#set_foreground_color = get(g:, "carbonpaper#set_foreground_color", 1)
+let g:carbonpaper#save_as                = get(g:, "carbonpaper#save_as"               , "<filename>.tex")
+let g:carbonpaper#filename_token         = get(g:, "carbonpaper#filename_token"        , "<filename>")
+let g:carbonpaper#overwrite              = get(g:, "carbonpaper#overwrite"             , 0)
+let g:carbonpaper#background             = get(g:, "carbonpaper#background"            , &background)
+let g:carbonpaper#colorscheme            = get(g:, "carbonpaper#colorscheme"           , g:colors_name)
+let g:carbonpaper#set_background_color   = get(g:, "carbonpaper#set_background_color"  , 1)
+let g:carbonpaper#set_foreground_color   = get(g:, "carbonpaper#set_foreground_color"  , 1)
+let g:carbonpaper#tex_escape_begin       = get(g:, "carbonpaper#tex_escape_begin"      , "(<cp.vim--begin>*#")
+let g:carbonpaper#tex_escape_end         = get(g:, "carbonpaper#tex_escape_end"        , "#*<cp.vim--end>)")
+let g:carbonpaper#tex_listing_options    = get(g:, "carbonpaper#tex_listing_options"   , 'basicstyle=\ttfamily')
+let g:carbonpaper#tex_listing_style_name = get(g:, "carbonpaper#tex_listing_style_name", "carbonpaper")
 
 function! s:parse_selected()
     let color_map                  = {}
@@ -36,8 +37,12 @@ function! s:parse_selected()
     call execute(join(["colorscheme ", g:carbonpaper#colorscheme], ""))
     call execute(join(["set background=", g:carbonpaper#background], ""))
 
-    let color_map["NonText"] = synIDattr(hlID("NonText"), "bg#")
-    let color_map["Normal"]  = synIDattr(hlID("Normal"),  "fg#")
+    if g:carbonpaper#set_background_color
+        let color_map["NonText"] = synIDattr(hlID("NonText"), "bg#")
+    endif
+    if g:carbonpaper#set_foreground_color
+        let color_map["Normal"]  = synIDattr(hlID("Normal"),  "fg#")
+    endif
 
     for line in lines
         while col <= strlen(line)
@@ -141,26 +146,26 @@ function! s:gen_moredelims(color_map)
     return join(delim_list, ",")
 endfunction
 
-function! s:gen_lstset(color_map)
+function! s:gen_lstdefinestyle(color_map)
     let begin     = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end       = s:escape_text(g:carbonpaper#tex_escape_end)
     let moredelim = s:gen_moredelims(a:color_map)
-    let options   = "language="
+    let options   = join(["language=", g:carbonpaper#tex_listing_options], ",")
     if g:carbonpaper#set_background_color
         let options = join(["backgroundcolor=\\color{NonText}", options], ",")
     endif
-    return join(["\\lstset{", options, ",", moredelim, "}"], "")
+    if g:carbonpaper#set_foreground_color
+        let options = substitute(options, "basicstyle=", 'basicstyle=\\color{Normal}', "g")
+        if match(options, "basicstyle=") == -1
+            let options = join(['basicstyle=\color{Normal}', options], ",")
+        endif
+    endif
+    return join(["\\lstdefinestyle{", g:carbonpaper#tex_listing_style_name, "}{",
+                \options, ",", moredelim, "}"], "")
 endfunction
 
 function! s:gen_begin_listing()
-    let options = g:carbonpaper#tex_listing_options
-    if g:carbonpaper#set_foreground_color
-        let options      = substitute(g:carbonpaper#tex_listing_options, "basicstyle=", 'basicstyle=\\color{Normal}', "g")
-        if match(options, "basicstyle=") == -1
-            let options = join([options, 'basicstyle=\color{Normal}'], ",")
-        endif
-    endif
-    return join(["\\begin{lstlisting}[", options, "]"], "")
+    return join(["\\begin{lstlisting}[style=", g:carbonpaper#tex_listing_style_name, "]"], "")
 endfunction
 
 function! s:gen_end_listing()
@@ -185,10 +190,11 @@ endfunction
 
 function! carbonpaper#main(...) range
     let [text_list, color_map] = s:parse_selected()
-    let code_body = s:gen_tex_code(text_list, color_map)
-    let color_def = s:gen_color_definitions(color_map)
-    let lstset    = s:gen_lstset(color_map)
-    let result = join([color_def, lstset, s:gen_begin_listing(), code_body, s:gen_end_listing()], "\n")
+    let code_body              = s:gen_tex_code(text_list, color_map)
+    let color_def              = s:gen_color_definitions(color_map)
+    let lstdefinestyle         = s:gen_lstdefinestyle(color_map)
+
+    let result = join([color_def, lstdefinestyle, s:gen_begin_listing(), code_body, s:gen_end_listing()], "\n")
     if a:0 == 0
         call s:save(result, g:carbonpaper#save_as)
     else
