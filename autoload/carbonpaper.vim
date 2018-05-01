@@ -14,7 +14,7 @@ let g:carbonpaper#background             = get(g:, "carbonpaper#background"     
 let g:carbonpaper#colorscheme            = get(g:, "carbonpaper#colorscheme"           , g:colors_name)
 let g:carbonpaper#set_background_color   = get(g:, "carbonpaper#set_background_color"  , 1)
 let g:carbonpaper#set_foreground_color   = get(g:, "carbonpaper#set_foreground_color"  , 1)
-let g:carbonpaper#hilight_bold           = get(g:, "carbonpaper#hilight_bold"          , 1)
+let g:carbonpaper#highlight_bold         = get(g:, "carbonpaper#highlight_bold"        , 1)
 let g:carbonpaper#tex_escape_begin       = get(g:, "carbonpaper#tex_escape_begin"      , "(<cp.vim--begin>*#")
 let g:carbonpaper#tex_escape_end         = get(g:, "carbonpaper#tex_escape_end"        , "#*<cp.vim--end>)")
 let g:carbonpaper#tex_listing_options    = get(g:, "carbonpaper#tex_listing_options"   , 'basicstyle=\ttfamily')
@@ -137,7 +137,7 @@ function! s:gen_moredelim(color_name)
     let begin = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end   = s:escape_text(g:carbonpaper#tex_escape_end)
     let bold  = ""
-    if g:carbonpaper#hilight_bold
+    if g:carbonpaper#highlight_bold
         let bold = "\\bfseries"
     endif
     return join(["moredelim=[is][\\color{", a:color_name, "}", bold, "]{", begin, a:color_name, "*}{", end, "}"], "")
