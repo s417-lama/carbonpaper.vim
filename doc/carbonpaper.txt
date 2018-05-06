@@ -1,0 +1,7 @@
+*carbonpaper.txt*  Transfer codes to TeX with your colorscheme of Vim
+*carbonpaper* *carbonpaper.vim*
+
+==============================================================================
+INTRODUCTION                                             *carbonpaper-intro*
+
+ vim:tw=78:sw=4:ts=8:ft=help:norl:
