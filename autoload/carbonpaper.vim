@@ -19,6 +19,18 @@ let g:carbonpaper#tex_escape_end         = get(g:, "carbonpaper#tex_escape_end" 
 let g:carbonpaper#tex_listing_options    = get(g:, "carbonpaper#tex_listing_options"   , 'basicstyle=\ttfamily')
 let g:carbonpaper#tex_listing_style_name = get(g:, "carbonpaper#tex_listing_style_name", "carbonpaper")
 
+function! s:get_selected_lengths()
+    try
+        let a_save = @a
+        normal! gv"ay
+        let lines = split(@a, "\n")
+        let lengths = map(lines, {_, line -> strlen(line)})
+        return lengths
+    finally
+        let @a = a_save
+    endtry
+endfunction
+
 function! s:parse_selected()
     let color_map                  = {}
     let text_list                  = []
@@ -26,11 +38,19 @@ function! s:parse_selected()
     let [line_end  , column_end  ] = getpos("'>")[1:2]
     let lines                      = getline(line_start, line_end)
     let lines[-1]                  = lines[-1][:column_end - 1]
+    let line_lengths               = s:get_selected_lengths()
     let row                        = line_start
     let col                        = column_start
+    let col_offset                 = 0
     let last_id                    = 0
     let tmp_text                   = []
     let tmp_name                   = ""
+    let is_block                   = 0
+
+    if visualmode() == "\<c-v>"
+        let is_block   = 1
+        let col_offset = column_start
+    endif
 
     let save_colorscheme = g:colors_name
     let save_background  = &background
@@ -45,7 +65,7 @@ function! s:parse_selected()
     endif
 
     for line in lines
-        while col <= strlen(line)
+        while col <= strlen(line) && (!is_block || col - col_offset < line_lengths[row - line_start])
             let char  = line[col - 1]
             let id    = synIDtrans(synID(row, col, 1))
             let color = synIDattr(id, "fg#")
@@ -68,7 +88,7 @@ function! s:parse_selected()
             call add(text_list, ["", ["\n"]])
         endif
         let tmp_text = []
-        let col = 1
+        let col = col_offset
         let row += 1
     endfor
     call add(text_list, [tmp_name, tmp_text])
