@@ -139,7 +139,7 @@ endfunction
 
 function! s:gen_color_definition(name, color)
     let color_code = a:color[1:]
-    return "\\definecolor{" . a:name . "}{HTML}{" . color_code . "}"
+    return "\\definecolor{cp-" . a:name . "}{HTML}{" . color_code . "}"
 endfunction
 
 function! s:gen_color_definitions(color_map)
@@ -157,7 +157,7 @@ function! s:gen_moredelim(color_name)
     if g:carbonpaper#highlight_bold
         let bold = "\\bfseries"
     endif
-    return "moredelim=[is][\\color{" . a:color_name . "}" . bold . "]{" . begin . a:color_name . "*}{" . end . "}"
+    return "moredelim=[is][\\color{cp-" . a:color_name . "}" . bold . "]{" . begin . a:color_name . "*}{" . end . "}"
 endfunction
 
 function! s:gen_moredelims(color_map)
@@ -174,12 +174,12 @@ function! s:gen_lstdefinestyle(color_map)
     let moredelim = s:gen_moredelims(a:color_map)
     let options   = "language=," . g:carbonpaper#tex_listing_options
     if g:carbonpaper#set_background_color
-        let options = "backgroundcolor=\\color{NonText}," . options
+        let options = "backgroundcolor=\\color{cp-NonText}," . options
     endif
     if g:carbonpaper#set_foreground_color
-        let options = substitute(options, "basicstyle=", 'basicstyle=\\color{Normal}', "g")
+        let options = substitute(options, "basicstyle=", 'basicstyle=\\color{cp-Normal}', "g")
         if match(options, "basicstyle=") == -1
-            let options = 'basicstyle=\color{Normal},' . options
+            let options = 'basicstyle=\color{cp-Normal},' . options
         endif
     endif
     return "\\lstdefinestyle{" . g:carbonpaper#tex_listing_style_name . "}{" . options . "," . moredelim . "}"
