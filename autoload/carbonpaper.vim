@@ -9,7 +9,6 @@ set cpo&vim
 
 let g:carbonpaper#save_as                = get(g:, "carbonpaper#save_as"               , "<filename>.tex")
 let g:carbonpaper#filename_token         = get(g:, "carbonpaper#filename_token"        , "<filename>")
-let g:carbonpaper#overwrite              = get(g:, "carbonpaper#overwrite"             , 0)
 let g:carbonpaper#background             = get(g:, "carbonpaper#background"            , &background)
 let g:carbonpaper#colorscheme            = get(g:, "carbonpaper#colorscheme"           , g:colors_name)
 let g:carbonpaper#set_background_color   = get(g:, "carbonpaper#set_background_color"  , 1)
@@ -35,8 +34,8 @@ function! s:parse_selected()
 
     let save_colorscheme = g:colors_name
     let save_background  = &background
-    call execute(join(["colorscheme ", g:carbonpaper#colorscheme], ""))
-    call execute(join(["set background=", g:carbonpaper#background], ""))
+    call execute("colorscheme " . g:carbonpaper#colorscheme)
+    call execute("set background=" . g:carbonpaper#background)
 
     if g:carbonpaper#set_background_color
         let color_map["NonText"] = synIDattr(hlID("NonText"), "bg#")
@@ -74,8 +73,8 @@ function! s:parse_selected()
     endfor
     call add(text_list, [tmp_name, tmp_text])
 
-    call execute(join(["colorscheme ", save_colorscheme], ""))
-    call execute(join(["set background=", save_background], ""))
+    call execute("colorscheme " . save_colorscheme)
+    call execute("set background=" . save_background)
 
     return [text_list, color_map]
 endfunction
@@ -83,7 +82,7 @@ endfunction
 function! s:escape_char(char)
     let default_escapes = ["{", "}", "$", "#", "_", "&", "%"]
     if index(default_escapes, a:char) >= 0
-        return join(["\\", a:char], "")
+        return "\\" . a:char
     end
     if a:char == "\\"
         return "\\textbackslash{}"
@@ -103,9 +102,7 @@ endfunction
 
 function! s:gen_colored_text(text, color_name)
     let body = join(a:text, "")
-    return join([g:carbonpaper#tex_escape_begin,
-                \a:color_name, "*", body,
-                \g:carbonpaper#tex_escape_end], "")
+    return g:carbonpaper#tex_escape_begin . a:color_name . "*" . body . g:carbonpaper#tex_escape_end
 endfunction
 
 function! s:gen_tex_code(text_list, color_map)
@@ -122,7 +119,7 @@ endfunction
 
 function! s:gen_color_definition(name, color)
     let color_code = a:color[1:]
-    return join(["\\definecolor{", a:name, "}{HTML}{", color_code, "}"], "")
+    return "\\definecolor{" . a:name . "}{HTML}{" . color_code . "}"
 endfunction
 
 function! s:gen_color_definitions(color_map)
@@ -140,7 +137,7 @@ function! s:gen_moredelim(color_name)
     if g:carbonpaper#highlight_bold
         let bold = "\\bfseries"
     endif
-    return join(["moredelim=[is][\\color{", a:color_name, "}", bold, "]{", begin, a:color_name, "*}{", end, "}"], "")
+    return "moredelim=[is][\\color{" . a:color_name . "}" . bold . "]{" . begin . a:color_name . "*}{" . end . "}"
 endfunction
 
 function! s:gen_moredelims(color_map)
@@ -155,22 +152,21 @@ function! s:gen_lstdefinestyle(color_map)
     let begin     = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end       = s:escape_text(g:carbonpaper#tex_escape_end)
     let moredelim = s:gen_moredelims(a:color_map)
-    let options   = join(["language=", g:carbonpaper#tex_listing_options], ",")
+    let options   = "language=," . g:carbonpaper#tex_listing_options
     if g:carbonpaper#set_background_color
-        let options = join(["backgroundcolor=\\color{NonText}", options], ",")
+        let options = "backgroundcolor=\\color{NonText}," . options
     endif
     if g:carbonpaper#set_foreground_color
         let options = substitute(options, "basicstyle=", 'basicstyle=\\color{Normal}', "g")
         if match(options, "basicstyle=") == -1
-            let options = join(['basicstyle=\color{Normal}', options], ",")
+            let options = 'basicstyle=\color{Normal},' . options
         endif
     endif
-    return join(["\\lstdefinestyle{", g:carbonpaper#tex_listing_style_name, "}{",
-                \options, ",", moredelim, "}"], "")
+    return "\\lstdefinestyle{" . g:carbonpaper#tex_listing_style_name . "}{" . options . "," . moredelim . "}"
 endfunction
 
 function! s:gen_begin_listing()
-    return join(["\\begin{lstlisting}[style=", g:carbonpaper#tex_listing_style_name, "]"], "")
+    return "\\begin{lstlisting}[style=" . g:carbonpaper#tex_listing_style_name . "]"
 endfunction
 
 function! s:gen_end_listing()
@@ -179,18 +175,20 @@ endfunction
 
 function! s:save(text, filename)
     let filename = substitute(a:filename, g:carbonpaper#filename_token, expand('%:t'), "g")
-    if !g:carbonpaper#overwrite
-        while filereadable(filename)
-            let num = str2nr(split(filename, '\.')[-1])
-            if num == 0
-                let filename = join([filename, 1], ".")
-            else
-                let filename = join(split(filename, '\.')[:-2] + [num + 1], ".")
-            endif
-        endwhile
+    let filename = input("[carbonpaper.vim]  Save the TeX file as:\n", filename, "file")
+    if filereadable(filename)
+        let choice = confirm("'" . filename . "' already exists!  Would you overwrite?  Default: [N]o", "&Yes\n&No", 2)
+        if choice == 0
+            echo "Please enter Y or N"
+        elseif choice == 2
+            redraw
+            echo "The TeX file not saved."
+            return
+        endif
     endif
+    redraw
     call writefile(split(a:text, "\n"), filename)
-    echo join(["Saved as '", filename, "'"], "")
+    echo "Saved as '" . filename . "'"
 endfunction
 
 function! carbonpaper#main(...) range
