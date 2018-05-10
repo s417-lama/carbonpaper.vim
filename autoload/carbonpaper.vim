@@ -54,7 +54,15 @@ function! s:parse_selected()
 
     let save_colorscheme = g:colors_name
     let save_background  = &background
+
+    if exists('g:loaded_colorscheme_switcher')
+        call xolox#colorscheme_switcher#find_links()
+    endif
     call execute("colorscheme " . g:carbonpaper#colorscheme)
+    if exists('g:loaded_colorscheme_switcher')
+        call xolox#colorscheme_switcher#restore_links()
+    endif
+
     call execute("set background=" . g:carbonpaper#background)
 
     if g:carbonpaper#set_background_color
@@ -93,7 +101,14 @@ function! s:parse_selected()
     endfor
     call add(text_list, [tmp_name, tmp_text])
 
+    if exists('g:loaded_colorscheme_switcher')
+        call xolox#colorscheme_switcher#find_links()
+    endif
     call execute("colorscheme " . save_colorscheme)
+    if exists('g:loaded_colorscheme_switcher')
+        call xolox#colorscheme_switcher#restore_links()
+    endif
+
     call execute("set background=" . save_background)
 
     return [text_list, color_map]
