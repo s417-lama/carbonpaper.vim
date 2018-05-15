@@ -1,7 +1,90 @@
-*carbonpaper.txt*  Transfer codes to TeX with your colorscheme of Vim
-*carbonpaper* *carbonpaper.vim*
+*carbonpaper.txt* *carbonpaper* *carbonpaper.vim*
+Transfer codes to LaTeX with your colorscheme of Vim
 
 ==============================================================================
-INTRODUCTION                                             *carbonpaper-intro*
+CONTENTS                                                *carbonpaper-contents*
+
+    1. Introduction ............................. |carbonpaper-introduction|
+    2. Usage ........................................... |carbonpaper-usage|
+    3. Commands ..................................... |carbonpaper-commands|
+    4. Configuration ........................... |carbonpaper-configuration|
+
+==============================================================================
+INTRODUCTION                                        *carbonpaper-introduction*
+
+Highlight LaTeX codes in your favorite colorscheme of Vim!
+
+carbonpaper.vim is the LaTeX code (listings) generator using the colorscheme
+of Vim.  You can put your code into LaTeX as is the same color displayed in
+Vim.
+
+Even if you use modern or minor languages LaTeX does not support, you can
+generate beautifully highlighted code by this plugin.
+
+==============================================================================
+USAGE                                                      *carbonpaper-usage*
+
+Select the charactors you want to transfer to LaTeX code in visual mode, and
+execute the command |:CarbonPaper| (otherwise, "t" key by default).
+
+The generated file is a plain LaTeX file, so you can insert the line below
+to where you want to show the code in your LaTeX file. >
+    \input hoge.tex
+<(Suppose that you save the generated LaTeX file as `hoge.tex`.)
+
+LaTeX Packages Needed ~
+---------------------
+You must include "listings" package. >
+    \usepackage{listings}
+<
+In some cases, you would get error without "xcolor" package. >
+    \usepackage{xcolor}
+<
+==============================================================================
+COMMANDS                                                *carbonpaper-commands*
+
+:CarbonPaper                                                    *:CarbonPaper*
+    Transfers selected charactors to LaTeX code (listings) by using specified
+    colorscheme and saves it to the file.  The specified range is ignored.
+        `:CarbonPaper` or `:'<,'>CarbonPaper` is also OK.
+
+==============================================================================
+CONFIGURATION                                      *carbonpaper-configuration*
+
+*g:carbonpaper#background*                                   "light" or "dark"
+                                               default: current 'background'
+
+*g:carbonpaper#colorscheme*                                             string
+                                               default: current |:colorscheme|
+
+*g:carbonpaper#set_background_color*                                    0 or 1
+                                                                  default: 1
+
+*g:carbonpaper#set_foreground_color*                                    0 or 1
+                                                                  default: 1
+
+*g:carbonpaper#highlight_bold*                                          0 or 1
+                                                                  default: 1
+
+*g:carbonpaper#disable_mapping*                                         0 or 1
+                                                                  default: 0
+
+*g:carbonpaper#save_as*                                                 string
+                                                   default: "<filename>.tex"
+
+*g:carbonpaper#filename_token*                                          string
+                                                       default: "<filename>"
+
+*g:carbonpaper#tex_escape_begin*                                        string
+                                               default: "(<cp.vim--begin>*#"
+
+*g:carbonpaper#tex_escape_end*                                          string
+                                                 default: "#*<cp.vim--end>)"
+
+*g:carbonpaper#tex_listing_options*                                     string
+                                             default: 'basicstyle=\ttfamily'
+
+*g:carbonpaper#tex_listing_style_name*                                  string
+                                                      default: "carbonpaper"
 
  vim:tw=78:sw=4:ts=8:ft=help:norl:
