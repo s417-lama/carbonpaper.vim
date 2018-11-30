@@ -81,9 +81,6 @@ CONFIGURATION                                      *carbonpaper-configuration*
 *g:carbonpaper#tex_escape_end*                                          string
                                                  default: "#*<cp.vim--end>)"
 
-*g:carbonpaper#tex_listing_options*                                     string
-                                             default: 'basicstyle=\ttfamily'
-
 *g:carbonpaper#tex_listing_style_name*                                  string
                                                       default: "carbonpaper"
 

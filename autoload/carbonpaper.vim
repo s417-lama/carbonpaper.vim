@@ -16,7 +16,6 @@ let g:carbonpaper#set_foreground_color   = get(g:, "carbonpaper#set_foreground_c
 let g:carbonpaper#highlight_bold         = get(g:, "carbonpaper#highlight_bold"        , 1)
 let g:carbonpaper#tex_escape_begin       = get(g:, "carbonpaper#tex_escape_begin"      , "(<cp.vim--begin>*#")
 let g:carbonpaper#tex_escape_end         = get(g:, "carbonpaper#tex_escape_end"        , "#*<cp.vim--end>)")
-let g:carbonpaper#tex_listing_options    = get(g:, "carbonpaper#tex_listing_options"   , 'basicstyle=\ttfamily')
 let g:carbonpaper#tex_listing_style_name = get(g:, "carbonpaper#tex_listing_style_name", "carbonpaper")
 
 function! s:get_selected_lengths()
@@ -146,7 +145,11 @@ function! s:gen_tex_code(text_list, color_map)
         if has_key(a:color_map, name)
             call add(result, s:gen_colored_text(text, name))
         else
-            call add(result, join(text, ""))
+            if g:carbonpaper#set_foreground_color
+                call add(result, s:gen_colored_text(text, "Normal"))
+            else
+                call add(result, join(text, ""))
+            end
         endif
     endfor
     return join(result, "")
@@ -169,7 +172,7 @@ function! s:gen_moredelim(color_name)
     let begin = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end   = s:escape_text(g:carbonpaper#tex_escape_end)
     let bold  = ""
-    if g:carbonpaper#highlight_bold
+    if g:carbonpaper#highlight_bold && a:color_name != "Normal"
         let bold = "\\bfseries"
     endif
     return "moredelim=[is][\\color{cp-" . a:color_name . "}" . bold . "]{" . begin . a:color_name . "*}{" . end . "}"
@@ -187,15 +190,9 @@ function! s:gen_lstdefinestyle(color_map)
     let begin     = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end       = s:escape_text(g:carbonpaper#tex_escape_end)
     let moredelim = s:gen_moredelims(a:color_map)
-    let options   = "language=," . g:carbonpaper#tex_listing_options
+    let options   = "language="
     if g:carbonpaper#set_background_color
         let options = "backgroundcolor=\\color{cp-NonText}," . options
-    endif
-    if g:carbonpaper#set_foreground_color
-        let options = substitute(options, "basicstyle=", 'basicstyle=\\color{cp-Normal}', "g")
-        if match(options, "basicstyle=") == -1
-            let options = 'basicstyle=\color{cp-Normal},' . options
-        endif
     endif
     return "\\lstdefinestyle{" . g:carbonpaper#tex_listing_style_name . "}{" . options . "," . moredelim . "}"
 endfunction
@@ -241,4 +238,3 @@ function! carbonpaper#main(...) range
 endfunction
 
 let &cpo = s:save_cpo
-unlet s:save_cpo
