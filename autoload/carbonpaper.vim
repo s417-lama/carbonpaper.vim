@@ -14,8 +14,8 @@ let g:carbonpaper#colorscheme            = get(g:, "carbonpaper#colorscheme"    
 let g:carbonpaper#set_background_color   = get(g:, "carbonpaper#set_background_color"  , 1)
 let g:carbonpaper#set_foreground_color   = get(g:, "carbonpaper#set_foreground_color"  , 1)
 let g:carbonpaper#highlight_bold         = get(g:, "carbonpaper#highlight_bold"        , 1)
-let g:carbonpaper#tex_escape_begin       = get(g:, "carbonpaper#tex_escape_begin"      , "(<cp.vim--begin>*#")
-let g:carbonpaper#tex_escape_end         = get(g:, "carbonpaper#tex_escape_end"        , "#*<cp.vim--end>)")
+let g:carbonpaper#tex_escape_begin       = get(g:, "carbonpaper#tex_escape_begin"      , "(<cp--b>*#")
+let g:carbonpaper#tex_escape_end         = get(g:, "carbonpaper#tex_escape_end"        , "#*<cp--e>)")
 let g:carbonpaper#tex_listing_style_name = get(g:, "carbonpaper#tex_listing_style_name", "carbonpaper")
 
 function! s:get_selected_lengths()

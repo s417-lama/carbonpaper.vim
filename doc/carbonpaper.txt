@@ -66,9 +66,6 @@ CONFIGURATION                                      *carbonpaper-configuration*
 *g:carbonpaper#highlight_bold*                                          0 or 1
                                                                   default: 1
 
-*g:carbonpaper#disable_mapping*                                         0 or 1
-                                                                  default: 0
-
 *g:carbonpaper#save_as*                                                 string
                                                    default: "<filename>.tex"
 
@@ -76,10 +73,10 @@ CONFIGURATION                                      *carbonpaper-configuration*
                                                        default: "<filename>"
 
 *g:carbonpaper#tex_escape_begin*                                        string
-                                               default: "(<cp.vim--begin>*#"
+                                                       default: "(<cp--b>*#"
 
 *g:carbonpaper#tex_escape_end*                                          string
-                                                 default: "#*<cp.vim--end>)"
+                                                       default: "#*<cp--e>)"
 
 *g:carbonpaper#tex_listing_style_name*                                  string
                                                       default: "carbonpaper"
