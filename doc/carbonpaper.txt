@@ -1,5 +1,5 @@
 *carbonpaper.txt* *carbonpaper* *carbonpaper.vim*
-Transfer codes to LaTeX with your colorscheme of Vim
+Transfer code to LaTeX with your colorscheme of Vim
 
 ==============================================================================
 CONTENTS                                                *carbonpaper-contents*
@@ -8,11 +8,14 @@ CONTENTS                                                *carbonpaper-contents*
     2. Usage ........................................... |carbonpaper-usage|
     3. Commands ..................................... |carbonpaper-commands|
     4. Configuration ........................... |carbonpaper-configuration|
+    5. Known Problems ............................... |carbonpaper-problems|
+    6. Contribution ............................. |carbonpaper-contribution|
+    7. License ....................................... |carbonpaper-license|
 
 ==============================================================================
 INTRODUCTION                                        *carbonpaper-introduction*
 
-Highlight LaTeX codes in your favorite colorscheme of Vim!
+Highlight LaTeX code in your favorite colorscheme of Vim!
 
 carbonpaper.vim is the LaTeX code (listings) generator using the colorscheme
 of Vim.  You can put your code into LaTeX as is the same color displayed in
@@ -25,7 +28,8 @@ generate beautifully highlighted code by this plugin.
 USAGE                                                      *carbonpaper-usage*
 
 Select the charactors you want to transfer to LaTeX code in visual mode, and
-execute the command |:CarbonPaper| (otherwise, "t" key by default).
+execute the command |:CarbonPaper|.  By executing the command, a dialog is
+displayed and you can save the output file anywhere you like.
 
 The generated file is a plain LaTeX file, so you can insert the line below
 to where you want to show the code in your LaTeX file. >
@@ -51,34 +55,103 @@ COMMANDS                                                *carbonpaper-commands*
 ==============================================================================
 CONFIGURATION                                      *carbonpaper-configuration*
 
+*g:carbonpaper#colorscheme*                                             string
+                                               default: current |:colorscheme|
+
+    Specify the colorscheme for output.  The current colorscheme is used by
+    default, but you can use more suitable colorscheme you like for outputting
+    TeX files by this option.
+
 *g:carbonpaper#background*                                   "light" or "dark"
                                                default: current 'background'
 
-*g:carbonpaper#colorscheme*                                             string
-                                               default: current |:colorscheme|
+    Similar to |g:carbonpaper#colorscheme|, and you can specify 'background'
+    for output.  The value is "light" or "dark" in most cases.
 
 *g:carbonpaper#set_background_color*                                    0 or 1
                                                                   default: 1
 
+    You can choose whether to set the background color of listings in TeX to
+    the current colorscheme's one or not.  If you disable this option (set to
+    0), the default background color in your TeX environment is applied.
+
 *g:carbonpaper#set_foreground_color*                                    0 or 1
                                                                   default: 1
+
+    You can choose whether to set the normal text color of listings in TeX to
+    the current colorscheme's one or not.  If you disable this option (set to
+    0), the default text color in your TeX environment (e.g. "basicstyle"
+    option in "\lstset" command) is applied.
 
 *g:carbonpaper#highlight_bold*                                          0 or 1
                                                                   default: 1
 
+    Use bold font ("\bfseries" in TeX) to highlighted code.  If this option is
+    enabled (set to 1), colored text in vim (except for normal text) are all
+    displayed in bold font.
+
 *g:carbonpaper#save_as*                                                 string
                                                    default: "<filename>.tex"
+
+    Default file name to save with.  "<filename>" is a token specified in
+    |g:carbonpaper#filename_token|, which is a filename of the target file.
+    You don't have to include the token in this option.
 
 *g:carbonpaper#filename_token*                                          string
                                                        default: "<filename>"
 
+    A token of filename used in |g:carbonpaper#save_as|.  If you modify this
+    option, you may have to modify |g:carbonpaper#save_as| option too.
+
 *g:carbonpaper#tex_escape_begin*                                        string
                                                        default: "(<cp--b>*#"
+
+    A delimiter used in listings in TeX to highlight code.  Internally,
+    "moredelim" option of listings is used to insert "\color" or "\textbf".
 
 *g:carbonpaper#tex_escape_end*                                          string
                                                        default: "#*<cp--e>)"
 
+    A delimiter used in listings in TeX to highlight code.  Internally,
+    "moredelim" option of listings is used to insert "\color" or "\textbf".
+
 *g:carbonpaper#tex_listing_style_name*                                  string
                                                       default: "carbonpaper"
+
+    A style name used in listings in TeX.  The style is defined and used like
+    below. >
+        \lstdefinestyle{carbonpaper}{...}
+        \begin{lstlisting}[style=carbonpaper]
+<
+==============================================================================
+KNOWN PROBLEMS                                          *carbonpaper-problems*
+
+The colorscheme is collapsed after executing :Carbonpaper ~
+---------------------------------------------------------
+The colorscheme may be collapsed after executing |:CarbonPaper| command if you
+specify |g:carbonpaper#colorscheme| other than the default colorscheme.
+This is because we actually change the colorscheme when creating a output TeX
+file and set back to the default one, and there is a bug with switching
+colorschemes dynamically in vim by nature.
+
+This bug can be almost resolved by using functions of a plugin
+"xolox/vim-colorscheme-switcher".
+In order to fix this bug, you have to include these plugins: >
+    xolox/vim-misc
+    xolox/vim-colorscheme-switcher
+<("xolox/vim-misc" is required for "xolox/vim-colorscheme-switcher")
+
+All you have to do is install these plugins, because we use functions of them
+internally.
+
+==============================================================================
+CONTRIBUTION                                        *carbonpaper-contribution*
+
+Super welcome.
+
+==============================================================================
+LICENSE                                                  *carbonpaper-license*
+
+MIT License. Copyright (c) 2018 Shumpei Shiina
 
  vim:tw=78:sw=4:ts=8:ft=help:norl:
