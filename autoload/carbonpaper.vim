@@ -72,7 +72,7 @@ function! s:parse_selected()
         endif
     endif
     if g:carbonpaper#set_foreground_color
-        let color_map["Normal"]  = synIDattr(hlID("Normal"),  "fg#")
+        let color_map["Normal"] = synIDattr(hlID("Normal"), "fg#")
     endif
 
     for line in lines
@@ -172,11 +172,11 @@ function! s:gen_color_definitions(color_map)
     return join(def_list, "\n")
 endfunction
 
-function! s:gen_moredelim(color_name)
+function! s:gen_moredelim(color_name, color, color_map)
     let begin = s:escape_text(g:carbonpaper#tex_escape_begin)
     let end   = s:escape_text(g:carbonpaper#tex_escape_end)
     let bold  = ""
-    if g:carbonpaper#highlight_bold && a:color_name != "Normal"
+    if g:carbonpaper#highlight_bold && a:color != a:color_map["Normal"]
         let bold = "\\bfseries"
     endif
     return "moredelim=[is][\\color{cp-" . a:color_name . "}" . bold . "]{" . begin . a:color_name . "*}{" . end . "}"
@@ -184,8 +184,8 @@ endfunction
 
 function! s:gen_moredelims(color_map)
     let delim_list = []
-    for name in keys(a:color_map)
-        call add(delim_list, s:gen_moredelim(name))
+    for [name, color] in items(a:color_map)
+        call add(delim_list, s:gen_moredelim(name, color, a:color_map))
     endfor
     return join(delim_list, ",")
 endfunction
