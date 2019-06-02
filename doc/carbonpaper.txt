@@ -1,5 +1,5 @@
 *carbonpaper.txt* *carbonpaper* *carbonpaper.vim*
-Transfer code to LaTeX with your colorscheme of Vim
+Transfer code to LaTeX with your colorscheme in Vim
 
 ==============================================================================
 CONTENTS                                                *carbonpaper-contents*
@@ -17,38 +17,37 @@ INTRODUCTION                                        *carbonpaper-introduction*
 
 Highlight LaTeX code in your favorite colorscheme of Vim!
 
-carbonpaper.vim is the LaTeX code (listings) generator using the colorscheme
-of Vim.  You can put your code into LaTeX as is the same color displayed in
-Vim.
+carbonpaper.vim is a LaTeX code (listings) generator using a colorscheme of
+Vim.  You can put your code into LaTeX as is the same color displayed in Vim.
 
-Even if you use modern or minor languages LaTeX does not support, you can
-generate beautifully highlighted code by this plugin.
+Even if you use modern or minor programming languages that LaTeX does not
+support, you can generate beautifully highlighted code by this plugin.
 
 ==============================================================================
 USAGE                                                      *carbonpaper-usage*
 
-Select the charactors you want to transfer to LaTeX code in visual mode, and
-execute the command |:CarbonPaper|.  By executing the command, a dialog is
-displayed and you can save the output file anywhere you like.
+Select characters you want to transfer to LaTeX code in visual mode, and then
+execute the command |:CarbonPaper|.  By executing this command, a dialog is
+displayed and you can save an output TeX file anywhere you like.
 
 The generated file is a plain LaTeX file, so you can insert the line below
 to where you want to show the code in your LaTeX file. >
     \input hoge.tex
-<(Suppose that you save the generated LaTeX file as `hoge.tex`.)
+<(`hoge.tex` is the file you saved.)
 
 LaTeX Packages Needed ~
 ---------------------
 You must include "listings" package. >
     \usepackage{listings}
 <
-In some cases, you would get error without "xcolor" package. >
+In some environment, you would get error without "xcolor" package. >
     \usepackage{xcolor}
 <
 ==============================================================================
 COMMANDS                                                *carbonpaper-commands*
 
 :CarbonPaper                                                    *:CarbonPaper*
-    Transfers selected charactors to LaTeX code (listings) by using specified
+    Transfers selected characters to LaTeX code (listings) by using specified
     colorscheme and saves it to the file.  The specified range is ignored.
         `:CarbonPaper` or `:'<,'>CarbonPaper` is also OK.
 
@@ -58,37 +57,38 @@ CONFIGURATION                                      *carbonpaper-configuration*
 *g:carbonpaper#colorscheme*                                             string
                                                default: current |:colorscheme|
 
-    Specify the colorscheme for output.  The current colorscheme is used by
+    Specify a colorscheme for output.  The current colorscheme is used by
     default, but you can use more suitable colorscheme you like for outputting
     TeX files by this option.
 
 *g:carbonpaper#background*                                   "light" or "dark"
                                                default: current 'background'
 
-    Similar to |g:carbonpaper#colorscheme|, and you can specify 'background'
-    for output.  The value is "light" or "dark" in most cases.
+    Similar to |g:carbonpaper#colorscheme|, you can specify 'background' for
+    output.  The value is "light" or "dark" in most cases.
 
 *g:carbonpaper#set_background_color*                                    0 or 1
                                                                   default: 1
 
-    You can choose whether to set the background color of listings in TeX to
-    the current colorscheme's one or not.  If you disable this option (set to
-    0), the default background color in your TeX environment is applied.
+    Whether or not to set the background color of listings in TeX to the
+    current colorscheme's background color.  If you disable this option (set
+    to 0), the default background color in your TeX environment (e.g.,
+    specified in "\lstset") is applied.
 
 *g:carbonpaper#set_foreground_color*                                    0 or 1
                                                                   default: 1
 
-    You can choose whether to set the normal text color of listings in TeX to
-    the current colorscheme's one or not.  If you disable this option (set to
-    0), the default text color in your TeX environment (e.g. "basicstyle"
+    Whether or not to set the normal text color of listings in TeX to the
+    current colorscheme's foreground color.  If you disable this option (set
+    to 0), the default text color in your TeX environment (e.g., "basicstyle"
     option in "\lstset" command) is applied.
 
 *g:carbonpaper#highlight_bold*                                          0 or 1
                                                                   default: 1
 
-    Use bold font ("\bfseries" in TeX) to highlighted code.  If this option is
-    enabled (set to 1), colored text in vim (except for normal text) are all
-    displayed in bold font.
+    Whether or not to use bold font ("\bfseries" in TeX) to highlighted code.
+    If this option is enabled (set to 1), colored text in vim (except for
+    normal text) are all displayed in bold font.
 
 *g:carbonpaper#save_as*                                                 string
                                                    default: "<filename>.tex"
@@ -100,48 +100,48 @@ CONFIGURATION                                      *carbonpaper-configuration*
 *g:carbonpaper#filename_token*                                          string
                                                        default: "<filename>"
 
-    A token of filename used in |g:carbonpaper#save_as|.  If you modify this
+    Token of filename used in |g:carbonpaper#save_as|.  If you modify this
     option, you may have to modify |g:carbonpaper#save_as| option too.
 
 *g:carbonpaper#tex_escape_begin*                                        string
                                                        default: "(<cp--b>*#"
 
-    A delimiter used in listings in TeX to highlight code.  Internally,
+    Delimiter used in listings in TeX to highlight code.  Internally,
     "moredelim" option of listings is used to insert "\color" or "\textbf".
 
 *g:carbonpaper#tex_escape_end*                                          string
                                                        default: "#*<cp--e>)"
 
-    A delimiter used in listings in TeX to highlight code.  Internally,
+    Delimiter used in listings in TeX to highlight code.  Internally,
     "moredelim" option of listings is used to insert "\color" or "\textbf".
 
 *g:carbonpaper#tex_listing_style_name*                                  string
                                                       default: "carbonpaper"
 
-    A style name used in listings in TeX.  The style is defined and used like
-    below. >
+    Style name used in listings in TeX.  In generated TeX files, the style is
+    defined and used as shown below. >
         \lstdefinestyle{carbonpaper}{...}
         \begin{lstlisting}[style=carbonpaper]
 <
 ==============================================================================
 KNOWN PROBLEMS                                          *carbonpaper-problems*
 
-The colorscheme is collapsed after executing :Carbonpaper ~
----------------------------------------------------------
-The colorscheme may be collapsed after executing |:CarbonPaper| command if you
-specify |g:carbonpaper#colorscheme| other than the default colorscheme.
-This is because we actually change the colorscheme when creating a output TeX
-file and set back to the default one, and there is a bug with switching
-colorschemes dynamically in vim by nature.
+Colorscheme collapses after executing :Carbonpaper ~
+--------------------------------------------------
+Colorscheme in the editor may collapse after executing |:CarbonPaper| command
+if you specify |g:carbonpaper#colorscheme| that is not the default one.  This
+is because this plugin changes the colorscheme when creating output TeX files
+and sets it back to the default one. In fact, it is a known bug in Vim that
+a colorscheme collapses after dynamically changing colorschemes.
 
-This bug can be almost resolved by using functions of a plugin
+This bug can be mostly resolved by using functions of a plugin
 "xolox/vim-colorscheme-switcher".
 In order to fix this bug, you have to include these plugins: >
     xolox/vim-misc
     xolox/vim-colorscheme-switcher
 <("xolox/vim-misc" is required for "xolox/vim-colorscheme-switcher")
 
-All you have to do is install these plugins, because we use functions of them
+All you have to do is install these plugins, because we use functions in them
 internally.
 
 ==============================================================================
@@ -152,6 +152,6 @@ Super welcome.
 ==============================================================================
 LICENSE                                                  *carbonpaper-license*
 
-MIT License. Copyright (c) 2018 Shumpei Shiina
+MIT License. Copyright (c) 2018-2019 Shumpei Shiina
 
  vim:tw=78:sw=4:ts=8:ft=help:norl:
