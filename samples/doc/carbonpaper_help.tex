@@ -1,0 +1,167 @@
+\definecolor{cp-Ignore}{HTML}{eeeeee}
+\definecolor{cp-Comment}{HTML}{878787}
+\definecolor{cp-Normal}{HTML}{444444}
+\definecolor{cp-Special}{HTML}{444444}
+\definecolor{cp-Identifier}{HTML}{005f87}
+\definecolor{cp-Statement}{HTML}{d70087}
+\definecolor{cp-Type}{HTML}{d70087}
+\definecolor{cp-String}{HTML}{5f8700}
+\definecolor{cp-PreProc}{HTML}{005faf}
+\lstdefinestyle{carbonpaper}{language=,moredelim=[is][\color{cp-Ignore}\bfseries]{(<cp--b>*\#Ignore*}{\#*<cp--e>)},moredelim=[is][\color{cp-Comment}\bfseries]{(<cp--b>*\#Comment*}{\#*<cp--e>)},moredelim=[is][\color{cp-Normal}]{(<cp--b>*\#Normal*}{\#*<cp--e>)},moredelim=[is][\color{cp-Special}]{(<cp--b>*\#Special*}{\#*<cp--e>)},moredelim=[is][\color{cp-Identifier}\bfseries]{(<cp--b>*\#Identifier*}{\#*<cp--e>)},moredelim=[is][\color{cp-Statement}\bfseries]{(<cp--b>*\#Statement*}{\#*<cp--e>)},moredelim=[is][\color{cp-Type}\bfseries]{(<cp--b>*\#Type*}{\#*<cp--e>)},moredelim=[is][\color{cp-String}\bfseries]{(<cp--b>*\#String*}{\#*<cp--e>)},moredelim=[is][\color{cp-PreProc}\bfseries]{(<cp--b>*\#PreProc*}{\#*<cp--e>)}}
+\begin{lstlisting}[style=carbonpaper]
+(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper.txt#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal* #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal* #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper.vim#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*Transfer code to LaTeX with your colorscheme in Vim#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*CONTENTS                                                #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-contents#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    1. Introduction ............................. #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*carbonpaper-introduction#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    2. Usage ........................................... #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*carbonpaper-usage#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    3. Commands ..................................... #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*carbonpaper-commands#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    4. Configuration ........................... #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*carbonpaper-configuration#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    5. Known Problems ............................... #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*carbonpaper-problems#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    6. Contribution ............................. #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*carbonpaper-contribution#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    7. License ....................................... #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*carbonpaper-license#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*INTRODUCTION                                        #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-introduction#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*Highlight LaTeX code in your favorite colorscheme of Vim!#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*carbonpaper.vim is a LaTeX code (listings) generator using a colorscheme of#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*Vim.  You can put your code into LaTeX as is the same color displayed in Vim.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*Even if you use modern or minor programming languages that LaTeX does not#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*support, you can generate beautifully highlighted code by this plugin.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*USAGE                                                      #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-usage#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*Select characters you want to transfer to LaTeX code in visual mode, and then#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*execute the command #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*:CarbonPaper#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*.  By executing this command, a dialog is#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*displayed and you can save an output TeX file anywhere you like.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*The generated file is a plain LaTeX file, so you can insert the line below#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*to where you want to show the code in your LaTeX file.#*<cp--e>)(<cp--b>*#Ignore* >#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Comment*    \input hoge.tex#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore*<#*<cp--e>)(<cp--b>*#Normal*(#*<cp--e>)(<cp--b>*#Ignore*`#*<cp--e>)(<cp--b>*#Comment*hoge.tex#*<cp--e>)(<cp--b>*#Ignore*`#*<cp--e>)(<cp--b>*#Normal* is the file you saved.)#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*LaTeX Packages Needed#*<cp--e>)(<cp--b>*#Ignore* ~#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*---------------------#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*You must include "listings" package.#*<cp--e>)(<cp--b>*#Ignore* >#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Comment*    \usepackage{listings}#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore*<#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*In some environment, you would get error without "xcolor" package.#*<cp--e>)(<cp--b>*#Ignore* >#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Comment*    \usepackage{xcolor}#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore*<#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*COMMANDS                                                #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-commands#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*:CarbonPaper                                                    #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*:CarbonPaper#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Transfers selected characters to LaTeX code (listings) by using specified#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    colorscheme and saves it to the file.  The specified range is ignored.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*        #*<cp--e>)(<cp--b>*#Ignore*`#*<cp--e>)(<cp--b>*#Comment*:CarbonPaper#*<cp--e>)(<cp--b>*#Ignore*`#*<cp--e>)(<cp--b>*#Normal* or #*<cp--e>)(<cp--b>*#Ignore*`#*<cp--e>)(<cp--b>*#Comment*:'<,'>CarbonPaper#*<cp--e>)(<cp--b>*#Ignore*`#*<cp--e>)(<cp--b>*#Normal* is also OK.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*CONFIGURATION                                      #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-configuration#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#colorscheme#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                             string#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                               default: current #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*:colorscheme#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Specify a colorscheme for output.  The current colorscheme is used by#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    default, but you can use more suitable colorscheme you like for outputting#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    TeX files by this option.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#background#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                   "light" or "dark"#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                               default: current #*<cp--e>)(<cp--b>*#Type*'background'#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Similar to #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*g:carbonpaper#colorscheme#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*, you can specify #*<cp--e>)(<cp--b>*#Type*'background'#*<cp--e>)(<cp--b>*#Normal* for#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    output.  The value is "light" or "dark" in most cases.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#set_background_color#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                    0 or 1#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                                  default: 1#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Whether or not to set the background color of listings in TeX to the#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    current colorscheme's background color.  If you disable this option (set#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    to 0), the default background color in your TeX environment (e.g.,#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    specified in "\lstset") is applied.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#set_foreground_color#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                    0 or 1#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                                  default: 1#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Whether or not to set the normal text color of listings in TeX to the#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    current colorscheme's foreground color.  If you disable this option (set#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    to 0), the default text color in your TeX environment (e.g., "basicstyle"#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    option in "\lstset" command) is applied.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#highlight_bold#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                          0 or 1#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                                  default: 0#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Whether or not to use bold font ("\bfseries" in TeX) to highlighted code.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    If this option is enabled (set to 1), colored text in vim (except for#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    normal text) are all displayed in bold font.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#save_as#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                                 string#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                   default: "#*<cp--e>)(<cp--b>*#Special*<filename>#*<cp--e>)(<cp--b>*#Normal*.tex"#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Default file name to save with.  "#*<cp--e>)(<cp--b>*#Special*<filename>#*<cp--e>)(<cp--b>*#Normal*" is a token specified in#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*g:carbonpaper#filename_token#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*, which is a filename of the target file.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    You don't have to include the token in this option.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#filename_token#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                          string#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                       default: "#*<cp--e>)(<cp--b>*#Special*<filename>#*<cp--e>)(<cp--b>*#Normal*"#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Token of filename used in #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*g:carbonpaper#save_as#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal*.  If you modify this#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    option, you may have to modify #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*g:carbonpaper#save_as#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal* option too.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#tex_escape_begin#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                        string#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                       default: "(#*<cp--e>)(<cp--b>*#Special*<cp--b>#*<cp--e>)(<cp--b>*#Normal**#"#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Delimiter used in listings in TeX to highlight code.  Internally,#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    "moredelim" option of listings is used to insert "\color" or "\textbf".#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#tex_escape_end#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                          string#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                       default: "#*#*<cp--e>)(<cp--b>*#Special*<cp--e>#*<cp--e>)(<cp--b>*#Normal*)"#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Delimiter used in listings in TeX to highlight code.  Internally,#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    "moredelim" option of listings is used to insert "\color" or "\textbf".#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*g:carbonpaper#tex_listing_style_name#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*                                  string#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*                                                      default: "carbonpaper"#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    Style name used in listings in TeX.  In generated TeX files, the style is#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*    defined and used as shown below.#*<cp--e>)(<cp--b>*#Ignore* >#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Comment*        \lstdefinestyle{carbonpaper}{...}#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Comment*        \begin{lstlisting}[style=carbonpaper]#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore*<#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*KNOWN PROBLEMS                                          #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-problems#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*Colorscheme collapses after executing :Carbonpaper#*<cp--e>)(<cp--b>*#Ignore* ~#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*--------------------------------------------------#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*Colorscheme in the editor may collapse after executing #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*:CarbonPaper#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal* command#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*if you specify #*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Identifier*g:carbonpaper#colorscheme#*<cp--e>)(<cp--b>*#Ignore*|#*<cp--e>)(<cp--b>*#Normal* that is not the default one.  This#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*is because this plugin changes the colorscheme when creating output TeX files#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*and sets it back to the default one. In fact, it is a known bug in Vim that#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*a colorscheme collapses after dynamically changing colorschemes.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*This bug can be mostly resolved by using functions of a plugin#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*"xolox/vim-colorscheme-switcher".#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*In order to fix this bug, you have to include these plugins:#*<cp--e>)(<cp--b>*#Ignore* >#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Comment*    xolox/vim-misc#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Comment*    xolox/vim-colorscheme-switcher#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Ignore*<#*<cp--e>)(<cp--b>*#Normal*("xolox/vim-misc" is required for "xolox/vim-colorscheme-switcher")#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*All you have to do is install these plugins, because we use functions in them#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*internally.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*CONTRIBUTION                                        #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-contribution#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*Super welcome.#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#PreProc*==============================================================================#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Statement*LICENSE                                                  #*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#String*carbonpaper-license#*<cp--e>)(<cp--b>*#Ignore**#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)(<cp--b>*#Normal*
+#*<cp--e>)(<cp--b>*#Normal*MIT License. Copyright (c) 2018-2019 Shumpei Shiina#*<cp--e>)(<cp--b>*#Normal*#*<cp--e>)
+\end{lstlisting}
