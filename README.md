@@ -53,9 +53,10 @@ The required packages are:
 \usepackage{xcolor}
 ```
 
-Font is also important. I recommend to use `inconsolata` font.
+Since font in Vim is not transferred, font in listings is also important. I recommend to use `inconsolata` font.
 
 The LaTeX code used in the demo is [samples/demo/demo.tex](samples/demo/demo.tex). Please consult it if you need more information.
+The generated PDF is [samples/demo/demo.pdf](samples/demo/demo.pdf).
 
 ## Configuration
 #### colorscheme
