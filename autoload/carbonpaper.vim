@@ -65,7 +65,7 @@ function! s:parse_selected()
     call execute("set background=" . g:carbonpaper#background)
 
     if g:carbonpaper#set_background_color
-        if synIDattr(hlID("Normal"), "bg#")
+        if synIDattr(hlID("Normal"), "bg#") != ""
             let color_map["NonText"] = synIDattr(hlID("Normal"), "bg#")
         else
             let g:carbonpaper#set_background_color = 0
