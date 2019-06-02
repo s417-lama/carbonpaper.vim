@@ -84,7 +84,7 @@ CONFIGURATION                                      *carbonpaper-configuration*
     option in "\lstset" command) is applied.
 
 *g:carbonpaper#highlight_bold*                                          0 or 1
-                                                                  default: 1
+                                                                  default: 0
 
     Whether or not to use bold font ("\bfseries" in TeX) to highlighted code.
     If this option is enabled (set to 1), colored text in vim (except for
